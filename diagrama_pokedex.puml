@@ -1,0 +1,99 @@
+@startuml
+abstract class Pokemon{
+-id: int
+-nombre: String
+-etapa: String
+-tipo1: String
+-tipo2: String
+
++Pokemon(id: int, nombre: String,etapa: String, tipo1: String,tipo2: String)
++getId(): int
++getNombre(): String
++getEtapa(): String
++getTipo1(): String
++getTipo2(): String
+}
+
+
+class Basico extends Pokemon{
+-primera_evolucion: String
+-segunda_evolucion: String
++Basico(id: int, nombre: String,etapa: String, tipo1: String, tipo2: String,
+primera_evolucion:String, segunda_evolucion: String)
++ getPrimera_evolucion(): String
++ getSegunda_evolucion(): String
+}
+
+class Primera_Evolucion extends Pokemon{
+-pre_evolucion: String
+-evolucion_sig: String
++Primera_Evolucion(id: int, nombre: String, etapa: String, tipo1:String,
+tipo2: String,pre_evolucion: String,evolucion_sig: String)
++getPre_evolucion(): String
++getEvolucion_sig(): String
+}
+
+class Segunda_Evolucion extends Pokemon{
+-pre_evolucion: String
+-pre_evolucion_basico: String
++Segunda_Evolucion(id: int, nombre:String, etapa: String, tipo1:String,
+tipo2: String,pre_evolucion: String,pre_evolucion_basico: String)
++getPre_evolucion(): String
++getPre_evolucion_basico(): String
+}
+
+
+interface Pokedex <<interface>>{
++ iniciar():void
++ desplegarPokemonRango():void
++ desplegarTodosLosPokemon():void
++ desplegarPokemonPorTipo():void
++ desplegarPrimerasEvolucionesDecreciente():void
++ busquedaPersonalizada():void
++ cierre():void
++ leerArchivo():void
++ desplegarDatosPokemon(pokemon: Pokemon):void
++ desplegarDatosCadenaEvolutiva(pokemon_buscado:Pokemon):void
+}
+
+class PokedexImpl implements Pokedex{
+-pokedex_completa: ListaDeNexosDoblePokemon
++PokedexImpl()
+}
+
+class NodoDoblePokemon{
+-pokemon:Pokemon
+-anterior:NodoDoblePokemon
+-siguiente:NodoDoblePokemon
++NodoDoblePokemon(pokemon: Pokemon)
++getPokemon(): Pokemon
++setPokemon(pokemon: Pokemon): void
++getAnterior(): NodoDoblePokemon
++setAnterior(anterior: NodoDoblePokemon): void
++getSiguiente(): NodoDoblePokemon
++setSiguiente(siguiente: NodoDoblePokemon): void
+}
+
+class ListaDeNexosDoblePokemon {
+
+-head: NodoDoblePokemon
+-tails: NodoDoblePokemon
++ListaDeNexosDoblePokemon()
++agregarAdelante(pokemon: Pokemon): void
++obtenerPokemon_Nombre(nombre_Pokemon: String): Pokemon
++obtenerPokemonPorID(posicion_id: int): Pokemon
++Lista_Vacia(): boolean
++obtenerPokemonPosicion(posicion: int): Pokemon
++tamanioDeLaLista(): int
++ordenar_ID_Creciente(): boolean
++ordenar_alfabetico(): boolean
++ordenar_ID_Decreciente(): boolean
++limiteInferior(): int
++limite_superior(): int
+}
+
+ListaDeNexosDoblePokemon "1" o-- "2" NodoDoblePokemon:Tiene
+NodoDoblePokemon "1" -> "1" Pokemon: Posee
+NodoDoblePokemon "1" -> "2" NodoDoblePokemon: Contiene
+PokedexImpl "1" -> "1" ListaDeNexosDoblePokemon:Maneja
+@enduml
